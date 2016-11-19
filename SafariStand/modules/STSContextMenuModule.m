@@ -24,6 +24,10 @@
 
 - (void)injectToContextMenuWithButtonCell:(NSMenu *)menu withVKView:(id)wkview
 {
+    if (![[wkview className] isEqualToString:@"BrowserWKView"]) {
+        return;
+    }
+
     NSMenuItem* itm;
     
     BOOL hasSelectedLink=NO;
