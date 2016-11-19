@@ -10,9 +10,9 @@
 #ifndef __SAFARISTAND_KEYS__
 #define __SAFARISTAND_KEYS__
 
-#define kSafariStandBundleID @"com.hetima.SafariStand"
-#define kSafariStandPrefDomain @"com.hetima.SafariStand"
-#define kSafariStandGitHubRepoName @"hetima/SafariStand"
+#define kSafariStandBundleID @"com.eac.SafariStand"
+#define kSafariStandPrefDomain @"com.eac.SafariStand"
+#define kSafariStandGitHubRepoName @"anakinsk/SafariStand"
 
 #define kpSettingMigratedV1 @"Stand_SettingMigratedV1"
 
@@ -89,7 +89,7 @@
 
 #define kpCheckedLatestVariosn @"Stand_CheckedLatestVariosn"//not used
 
-#define kSafariStandPBKey @"com.hetima.safaristand.cm"
+#define kSafariStandPBKey @"com.eac.safaristand.cm"
 
 #define kAOValueNotShowSidebarAuto @"STSMShouldNotShowSidebarAuto"
 
@@ -108,5 +108,10 @@
 
 #define kpInterceptGoToNthFavorite @"Stand_InterceptGoToNthFavorite"
 #define kpClosedTabQuantities @"Stand_ClosedTabQuantities"
+
+static NSString *const kpPlusButtonModeKey = @"Stand_PlustButtonMode";
+static NSString *const kpPlusButtonModeReadingList = @"Reading List";
+static NSString *const kpPlusButtonModeBookmarksBar = @"Favorites";
+static NSString *const kpPlusButtonModeBookmarksMenu = @"Bookmarks Menu";
 
 #endif

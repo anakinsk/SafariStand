@@ -8,11 +8,16 @@
 
 #import "SafariStand.h"
 #import "STSToolbarModule.h"
+#import "STCOneStepBookmarkingButtonController.h"
 
 #define kpBrowserToolbarIdentifier @"NSToolbar Configuration BrowserToolbarIdentifier-v2"
 
 
 static STSToolbarModule* toolbarModule;
+
+@interface STSToolbarModule ()
+
+@end
 
 @implementation STSToolbarModule {
     NSMutableDictionary* _toolbarItemClasses; //key=itemIdentifier, obj=object
@@ -60,6 +65,9 @@ static STSToolbarModule* toolbarModule;
         
         return result;
     }_WITHBLOCK;
+    
+    // TODO:
+    [[STCOneStepBookmarkingButtonController instance] applySwizzling];
     
     [self observePrefValue:kpExpandAddressBarWidthEnabled];
     [self observePrefValue:kpExpandAddressBarWidthValue];

@@ -16,10 +16,52 @@
 #import "HTWebKit2Adapter.h"
 #import "STFakeJSCommand.h"
 
+@interface STTabProxyFactory : NSObject
+
+- (STTabProxy *)tabProxyForItem:(NSTabViewItem *)tabViewItem;
+
+@end
+
+@implementation STTabProxyFactory
+
+- (STTabProxy *)tabProxyForItem:(NSTabViewItem *)tabViewItem {
+    STTabProxy *proxy = [tabViewItem htao_valueForKey:@"STTabProxy"];
+    
+    if (!proxy) {
+        proxy = [[STTabProxy alloc]initWithTabViewItem:tabViewItem];
+        
+        if ([[tabViewItem tabView]selectedTabViewItem]==tabViewItem) {
+            proxy.isSelected = YES;
+        } else {
+            proxy.isSelected = NO;
+        }
+        
+        proxy.waitIcon = YES;
+        NSString *URLString = [(id)tabViewItem URLString]; //sometimes nil even loading
+        
+        if (URLString) {
+            proxy.host=[[NSURL URLWithString:URLString]host];
+            [proxy fetchIconImage];
+        }
+    }
+    
+    NSParameterAssert(proxy);
+    
+    return proxy;
+}
+
+@end
+
+// --
+
 @implementation STTabProxy
 {
     BOOL _invalid;
     NSString* _cachedDomain;
+}
+
++ (STTabProxyFactory *)factory {
+    return [STTabProxyFactory new];
 }
 
 
@@ -37,7 +79,7 @@
 
 + (STTabProxy*)tabProxyForTabViewItem:(id)item
 {
-    return [item htao_valueForKey:@"STTabProxy"];
+    return [[self factory] tabProxyForItem:item];
 }
 
 
@@ -253,7 +295,7 @@
     if([_tabViewItem tabState]!=NSSelectedTab)self.isUnread=YES;
 
     
-    self.title=[self.tabViewItem title];
+    self.title= [self.tabViewItem title];
     self.host=[[NSURL URLWithString:[self URLString]]host];
     _cachedDomain=nil;
 
@@ -307,7 +349,7 @@
     
     id wkView=self.wkView;
     if (wkView) {
-        NSImage* icon=htWKIconImageForWKView(wkView, 32.0);
+        NSImage* icon=htWKIconImageForWKView(wkView, 64.0);
         if (icon) {
             [self willChangeValueForKey:@"image"];
             self.cachedImage=icon;

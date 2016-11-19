@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="STPrefWindowCtl">
@@ -439,6 +439,33 @@
                                             </popUpButtonCell>
                                             <connections>
                                                 <binding destination="f0r-av-vRL" name="selectedTag" keyPath="values.Stand_ClosedTabQuantities" id="cbn-Ml-IBG"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" id="LVV-Li-YS9">
+                                            <rect key="frame" x="326" y="49" width="290" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Plus button in address bar adds a bookmark to:" id="caN-I0-qWv">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton verticalHuggingPriority="750" misplaced="YES" id="aUu-ks-OwJ">
+                                            <rect key="frame" x="326" y="17" width="175" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="Reading List" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="hWr-IK-zQq" id="Zr3-TD-i8m">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" id="87c-a7-Avb">
+                                                    <items>
+                                                        <menuItem title="Reading List" state="on" id="hWr-IK-zQq"/>
+                                                        <menuItem title="Bookmarks Menu" tag="1" id="0NQ-dj-2m7"/>
+                                                        <menuItem title="Favorites" tag="2" id="3ni-0Z-vlf"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <binding destination="f0r-av-vRL" name="selectedTag" keyPath="values.Stand_PlustButtonMode" id="tSM-NX-BYk"/>
                                             </connections>
                                         </popUpButton>
                                     </subviews>

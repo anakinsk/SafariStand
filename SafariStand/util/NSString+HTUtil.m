@@ -139,9 +139,9 @@
     NSArray* revisionArray=[self componentsSeparatedByString:@"."];
     
     if ([revisionArray count]>1) {
-        revision=[NSString stringWithFormat:@"%@.%@", revisionArray[0], revisionArray[1]];
+        revision=[NSString stringWithFormat:@"%@", revisionArray[0]];
     }else if ([revisionArray count]==1){
-        revision=[NSString stringWithFormat:@"%@.0", revisionArray[0]];
+        revision=[NSString stringWithFormat:@"%@", revisionArray[0]];
     }
     
     return revision;

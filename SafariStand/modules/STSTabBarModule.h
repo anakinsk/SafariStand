@@ -19,4 +19,6 @@
 
 + (id)installedIconLayerInView:(NSView*)view;
 
+- (void)bringLayerToFront;
+
 @end

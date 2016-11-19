@@ -13,7 +13,6 @@
 #define STTabProxyDidFinishProgressNote @"STTabProxyDidFinishProgressNote"
 #define STTabProxyBecameInvalidNote @"STTabProxyBecameInvalidNote"
 
-
 @class STPreviewImageDelivery;
 
 @interface STTabProxy : NSObject
@@ -38,7 +37,6 @@
 
 @property(nonatomic, retain) NSDate* creationDate;
 @property(nonatomic, retain) NSDate* modificationDate;
-
 
 + (STTabProxy*)tabProxyForWKView:(id)wkView;
 + (STTabProxy*)tabProxyForTabViewItem:(id)item;

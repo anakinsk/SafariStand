@@ -134,11 +134,12 @@
 
 - (void)addSafariBookmarksView
 {
-    NSImage* img=STSafariBundleImageNamed(@"SB_ModernTabIconBookmarks");
-    [img setTemplate:YES];
+    // TODO: // Find that lost image
+    //NSImage* img=STSafariBundleImageNamed(@"ExtensionDefaultIcon64");
+    //[img setTemplate:YES];
     
     __weak STConsolePanelModule* weakSelf = self;
-    [self addPanelWithIdentifier:@"Bookmarks" title:@"Bookmarks" icon:img weight:2 loadHandler:^id{
+    [self addPanelWithIdentifier:@"Bookmarks" title:@"Bookmarks" icon:[[NSImage alloc] init] weight:2 loadHandler:^id{
         id bookmarksViewController=objc_msgSend([NSClassFromString(@"BookmarksSidebarViewController") alloc], @selector(initWithNibName:bundle:), nil, nil);
         weakSelf.bookmarksSidebarViewController=bookmarksViewController;
         return bookmarksViewController;

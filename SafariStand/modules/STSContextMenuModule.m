@@ -22,24 +22,8 @@
 
 @implementation STSContextMenuModule
 
-- (void)injectToContextMenuProxy:(void*)menuProxy
+- (void)injectToContextMenuWithButtonCell:(NSMenu *)menu withVKView:(id)wkview
 {
-    
-    // menuProxy は WebContextMenuProxyMac クラスのポインタ
-    // 16バイト目に NSPopUpButtonCell * へのポインタが格納されている
-    void* cellPtr=*((void **)menuProxy + 2);
-    NSPopUpButtonCell *cell = (__bridge NSPopUpButtonCell *)(cellPtr);
-
-    // WKView を取得。
-    //Safari 7 menuProxy の 24バイト目
-    //void* wkviewPtr= *((void **)menuProxy + 3);
-    //Safari 8 menuProxy の 32バイト目
-    void* wkviewPtr= *((void **)menuProxy + 4);
-    id wkview = (__bridge id)(wkviewPtr);
-    
-    // cell から menu を取得
-    // プラグインや機能拡張によって追加されたメニュー項目も含む、画面に表示する直前の状態のメニューが取り出せる
-    NSMenu *menu = [cell menu];
     NSMenuItem* itm;
     
     BOOL hasSelectedLink=NO;
@@ -402,7 +386,15 @@
     ^(id slf, void *menuProxy)
     {
         call(slf, sel, menuProxy);
-        [self injectToContextMenuProxy:menuProxy];
+        
+        KZRMETHOD_SWIZZLING_WITH_REVERT_("NSMenu", "+popUpContextMenu:withEvent:forView:", void, call, sel)
+        ^(id slf, NSMenu *object, NSEvent *event, NSView *view) {
+             [self injectToContextMenuWithButtonCell:object withVKView:view];
+            
+            call(self, sel, object, event, view);
+            
+            KZRSWIZZLE_REVERT;
+        }_WITHBLOCK;
     }_WITHBLOCK;
     
     

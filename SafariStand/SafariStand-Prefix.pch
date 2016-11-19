@@ -5,7 +5,7 @@
 #ifdef __OBJC__
 
 #import <objc/message.h>
-@import CoreGraphics.CGBase;
+#import <CoreGraphics/CoreGraphics.h>
 
 
 typedef struct _STMinMax {
@@ -69,7 +69,24 @@ Method _val_originalMethod; \
 if (_val_isClassMethod)_val_originalMethod = class_getClassMethod(_val_cls, originalSelector); \
 else _val_originalMethod = class_getInstanceMethod(_val_cls, originalSelector); \
 returnType(*originalIMP)(id, SEL, ...) = (returnType(*)(id, SEL, ...))method_getImplementation(_val_originalMethod); \
-if (originalIMP) { id _val_block=
+if (originalIMP) { \
+id _val_block=
+
+#define KZRMETHOD_SWIZZLING_WITH_REVERT_(className, selectorName, returnType, originalIMP, originalSelector) ({\
+NSInteger _val_err=KZRMethodSwizzlingNoError; \
+BOOL _val_isClassMethod=NO; \
+const char* _val_selName=selectorName; \
+if(*_val_selName=='+'){_val_isClassMethod=YES; _val_selName++;} \
+Class _val_cls=objc_getClass(className); \
+if (_val_cls){ \
+SEL originalSelector=sel_registerName(_val_selName); \
+Method _val_originalMethod; \
+if (_val_isClassMethod)_val_originalMethod = class_getClassMethod(_val_cls, originalSelector); \
+else _val_originalMethod = class_getInstanceMethod(_val_cls, originalSelector); \
+returnType(*originalIMP)(id, SEL, ...) = (returnType(*)(id, SEL, ...))method_getImplementation(_val_originalMethod); \
+if (originalIMP) { \
+IMP _val_originalImp = (IMP)originalIMP; \
+id _val_block=
 
 #define _WITHBLOCK ;IMP _val_newImp = imp_implementationWithBlock(_val_block); \
 method_setImplementation(_val_originalMethod, _val_newImp); \
@@ -77,6 +94,8 @@ method_setImplementation(_val_originalMethod, _val_newImp); \
 }else{_val_err=KZRMethodSwizzlingErrorClassNotFound;} \
 _val_err; \
 })
+
+#define KZRSWIZZLE_REVERT method_setImplementation(_val_originalMethod, _val_originalImp)
 
 #define KZRMETHOD_ADDING_(className, superClassName, selectorName, returnType, superIMP, originalSelector) ({\
 NSInteger _val_adding_err=KZRMethodSwizzlingNoError; \
